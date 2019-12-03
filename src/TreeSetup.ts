@@ -1,6 +1,6 @@
 import { PersonFactory, GENDER } from './Person';
 
-const setUpFamilyTree = () => {
+export const setUpFamilyTree = () => {
   const shan = PersonFactory.createPerson('Shan', GENDER.MALE);
   const anga = PersonFactory.createPerson('Anga', GENDER.FEMALE);
 
@@ -32,8 +32,8 @@ const setUpFamilyTree = () => {
   const chitra = PersonFactory.createPerson('Chitra', GENDER.FEMALE);
   chitra.setSpouse(aras);
 
-  const ahit = chitra.addChildren('Ahit', GENDER.MALE);
   const jinki = chitra.addChildren('Jinki', GENDER.FEMALE);
+  const ahit = chitra.addChildren('Ahit', GENDER.MALE);
   const arit = PersonFactory.createPerson('Arit', GENDER.MALE);
   jinki.setSpouse(arit);
 
@@ -43,8 +43,8 @@ const setUpFamilyTree = () => {
   const vyan = PersonFactory.createPerson('Vyan', GENDER.MALE);
   satya.setSpouse(vyan);
 
-  const asva = satya.addChildren('Asva', GENDER.MALE);
   const vyas = satya.addChildren('Vyas', GENDER.MALE);
+  const asva = satya.addChildren('Asva', GENDER.MALE);
   const atya = satya.addChildren('Atya', GENDER.FEMALE);
 
   const satvy = PersonFactory.createPerson('Satvy', GENDER.FEMALE);
@@ -52,7 +52,7 @@ const setUpFamilyTree = () => {
   satvy.addChildren('Vasa', GENDER.MALE);
 
   const krpi = PersonFactory.createPerson('Krpi', GENDER.FEMALE);
-  krpi.setSpouse(atya);
+  krpi.setSpouse(vyas);
   krpi.addChildren('Kriya', GENDER.MALE);
   krpi.addChildren('Krithi', GENDER.FEMALE);
 }
