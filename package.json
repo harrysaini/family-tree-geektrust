@@ -4,14 +4,31 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node dist/index.js",
     "build": "tsc",
     "watch-ts": "tsc -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha ${FILES:-test/*.test.ts}",
+    "test-debug": "nyc mocha --inspect-brk ${FILES:-test/*.test.ts}"
   },
-  "author": "",
+  "author": "Harish",
   "license": "ISC",
   "devDependencies": {
+    "@types/chai": "^4.2.6",
+    "@types/mocha": "^5.2.7",
     "@types/node": "^12.12.14",
+    "chai": "^4.2.0",
+    "mocha": "^6.2.2",
+    "nyc": "^14.1.1",
+    "source-map-support": "^0.5.16",
+    "ts-node": "^8.5.4",
     "typescript": "^3.7.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harrysaini/family-tree-geektrust.git"
+  },
+  "bugs": {
+    "url": "https://github.com/harrysaini/family-tree-geektrust/issues"
+  },
+  "homepage": "https://github.com/harrysaini/family-tree-geektrust#readme"
 }

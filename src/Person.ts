@@ -9,7 +9,9 @@ export interface IPersonMainRelations {
   children?: Person[];
 }
 
-
+/**
+ * Person class
+ */
 export class Person {
   name: string;
   gender: string;
@@ -21,17 +23,27 @@ export class Person {
     this.relations = (gender === GENDER.FEMALE) ? { children: [] } : {};
   }
 
+  /**
+   * Set spouse of person
+   * @param spouse
+   */
   setSpouse(spouse: Person) {
     // reverse mapping on both objects
     this.relations.spouse = spouse;
     spouse.relations.spouse = this;
   }
 
-  addChildren(name: string, gender: string) {
+  /**
+   * Add children to mother person
+   * @param name
+   * @param gender
+   * @param family
+   */
+  addChildren(name: string, gender: string, family: Family) {
     if (this.gender === GENDER.MALE) {
       throw new Error('CHILD_ADDITION_FAILED');
     }
-    const child = PersonFactory.createPerson(name, gender);
+    const child = family.createPerson(name, gender);
     child.relations.mother = this;
     this.relations.children && this.relations.children.push(child);
     return child;
@@ -42,10 +54,16 @@ interface IPersonMap {
   [key: string]: Person
 }
 
-export class PersonFactory {
-  static persons: IPersonMap = {};
+/** Factory for creating person in a famliy */
+export class Family {
+  persons: IPersonMap = {};
 
-  static createPerson(name: string, gender: string) {
+  /**
+   * Create new person
+   * @param name
+   * @param gender
+   */
+  createPerson(name: string, gender: string) {
     let person = this.persons[name];
     if (person) {
       throw new Error(`DUPLICATE_ENTRY`);
@@ -55,7 +73,11 @@ export class PersonFactory {
     return person;
   }
 
-  static getPerson(name: string) {
+  /**
+   * Get person by name
+   * @param name
+   */
+  getPerson(name: string) {
     const person = this.persons[name];
     if (!person) {
       throw new Error(`PERSON_NOT_FOUND`);

@@ -1,30 +1,39 @@
 import { setUpFamilyTree } from "./TreeSetup";
-import { PersonFactory } from "./Person";
+import { Family } from "./Person";
 import { getRelatives } from "./getRelatives";
 import { getNames } from "./utils";
 
-enum COMMAND {
+export enum COMMAND {
   ADD_CHILD = 'ADD_CHILD',
   GET_RELATIONSHIP = 'GET_RELATIONSHIP'
 }
 
 class Solution {
 
+  /**
+   * Execute array of commands
+   * @param commands
+   */
   static solve(commands: string[]) {
-    setUpFamilyTree();
+    const family: Family = setUpFamilyTree();
     const outputs = commands.map((command) => {
-      return this.executeCommand(command);
+      return this.executeCommand(command, family);
     });
     return outputs;
   }
 
-  static executeCommand(command: string): string{
+  /**
+   * Execute single command
+   * @param command
+   * @param family
+   */
+  static executeCommand(command: string, family: Family): string{
     try {
       const args = command.split(' ');
       if(args[0] === COMMAND.ADD_CHILD) {
-        return this.executeAddChildCommand(args);
+        return this.executeAddChildCommand(args, family);
       } else if (args[0] === COMMAND.GET_RELATIONSHIP) {
-        return this.executeGetRelationCommand(args);
+        return this.executeGetRelationCommand(args, family);
       } else {
         return 'INVALID_COMMAND';
       }
@@ -33,7 +42,12 @@ class Solution {
     }
   }
 
-  static executeAddChildCommand(args: string[]) {
+  /**
+   * Execute add child command
+   * @param args
+   * @param family
+   */
+  static executeAddChildCommand(args: string[], family: Family) {
     const motherName = args[1];
     const childName = args[2];
     const gender = args[3];
@@ -42,13 +56,18 @@ class Solution {
       throw new Error('ADD_CHILD_INVALID_ARGUMENTS');
     }
 
-    const mother = PersonFactory.getPerson(motherName);
+    const mother = family.getPerson(motherName);
 
-    mother.addChildren(childName, gender);
+    mother.addChildren(childName, gender, family);
     return 'CHILD_ADDITION_SUCCEEDED';
   }
 
-  static executeGetRelationCommand(args: string[]) {
+  /**
+   * Execute get relation command
+   * @param args
+   * @param family
+   */
+  static executeGetRelationCommand(args: string[], family: Family) {
     const name = args[1];
     const relation = args[2];
 
@@ -56,7 +75,7 @@ class Solution {
       throw new Error('GET_RELATIONSHIP_INVALID_ARGUMENTS');
     }
 
-    const person = PersonFactory.getPerson(name);
+    const person = family.getPerson(name);
 
     const relatives = getRelatives(person, relation);
 

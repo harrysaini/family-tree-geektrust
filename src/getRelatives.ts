@@ -1,6 +1,6 @@
 import { Person, GENDER } from "./Person";
 
-enum RELATIONS {
+export enum RELATIONS {
   PATERNAL_UNCLE = 'Paternal-Uncle',
   MATERNAL_UNCLE = 'Maternal-Uncle',
   PATERNAL_AUNT = 'Paternal-Aunt',
@@ -16,7 +16,7 @@ interface IRelativesGetter {
   [relation: string]: (person: Person) => Person[]
 }
 
-class GetRelatives {
+export class GetRelatives {
 
   static filterByGender(persons: Person[], gender: string): Person[] {
     // filter by gender
@@ -59,15 +59,15 @@ class GetRelatives {
     return motherSiblings;
   }
 
-  static inLawsSpouseSide(person: Person, gender: string): Person[] {
+  static inLawsSpouseSide(person: Person, siblingGender: string): Person[] {
     const spouse = person.relations.spouse;
     if(!spouse) return [];
-    const spouseSiblings = this.getSiblings(spouse, gender);
+    const spouseSiblings = this.getSiblings(spouse, siblingGender);
     return spouseSiblings;
   }
 
-  static inLawsOwnSide(person: Person, gender: string): Person[] {
-    const siblings = this.getSiblings(person, gender);
+  static inLawsOwnSide(person: Person, siblingGender: string): Person[] {
+    const siblings = this.getSiblings(person, siblingGender);
     const inLaws: Person[] = [];
     siblings.forEach((sibling) => {
       if(sibling.relations.spouse) {

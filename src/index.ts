@@ -1,30 +1,44 @@
 import Solution from "./Solution"
 import fs from 'fs';
 
-class FamilyTree {
-  // static runCommands() {
-  //   Solution.solve([
-  //     'ADD_CHILD Chitra Aria Female',
-  //     'GET_RELATIONSHIP Lavnya Maternal-Aunt',
-  //     'GET_RELATIONSHIP Aria Siblings',
-  //     'ADD_CHILD Pjali Srutak Male',
-  //     'GET_RELATIONSHIP Pjali Son',
-  //     'ADD_CHILD Asva Vani Female',
-  //     'GET_RELATIONSHIP Vasa Siblings',
-  //     'GET_RELATIONSHIP Atya Sister-In-Law',
-  //     'ADD_CHILD Satya Ketu Male',
-  //     'GET_RELATIONSHIP Kriya Paternal-Uncle',
-  //     'GET_RELATIONSHIP Satvy Brother-In-Law',
-  //     'GET_RELATIONSHIP Satvy Sister-In-Law',
-  //     'GET_RELATIONSHIP Ish Son',
-  //     'GET_RELATIONSHIP Misha Daughter'
-  //   ]);
-  // }
+class FamilyTreeSolution {
 
+  /**
+   * Run for debug
+   */
+  static runCommands() {
+    const outputs = Solution.solve([
+      'ADD_CHILD Chitra Aria Female',
+      'GET_RELATIONSHIP Lavnya Maternal-Aunt',
+      'GET_RELATIONSHIP Aria Siblings',
+      'ADD_CHILD Pjali Male',
+      'GET_RELATIONSHIP Pjali Son',
+      'ADD_CHILD Asva Vani Female',
+      'GET_RELATIONSHIP Vasa Siblings',
+      'GET_RELATIONSHIP Atya Sister-In-Law',
+      'ADD_CHILD Satya Ketu Male',
+      'GET_RELATIONSHIP Kriya Paternal-Uncle',
+      'GET_RELATIONSHIP Satvy Brother-In-Law',
+      'GET_RELATIONSHIP Satvy Sister-In-Law',
+      'GET_RELATIONSHIP Ish Son',
+      'GET_RELATIONSHIP Misha Daughter'
+    ]);
+    outputs.forEach((output: string) => {
+      console.log(output);
+    });
+  }
+
+  /**
+   * Get file path from process args
+   * @param args
+   */
   static getFilePath(args: string[]) {
     return args[2];
   }
 
+  /**
+   * Start the logic
+   */
   static async start() {
     const path = this.getFilePath(process.argv);
     if(!path) {
@@ -42,5 +56,4 @@ class FamilyTree {
 }
 
 
-
-FamilyTree.start();
+FamilyTreeSolution.start();
