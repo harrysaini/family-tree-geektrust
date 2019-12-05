@@ -1,11 +1,11 @@
 ##** Family Tree **##
 
 # How to run
-  - npm build
+  - npm run build
   - npm start <filePath>
 
 # run tests
-  - npm run test
+  - npm test
 
 # Buit using
   - Typescript
