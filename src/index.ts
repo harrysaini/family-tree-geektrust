@@ -7,7 +7,7 @@ class FamilyTreeSolution {
    * Run for debug
    */
   static runCommands() {
-    const outputs = Solution.solve([
+    const outputs = new Solution().solve([
       'ADD_CHILD Chitra Aria Female',
       'GET_RELATIONSHIP Lavnya Maternal-Aunt',
       'GET_RELATIONSHIP Aria Siblings',
@@ -47,7 +47,8 @@ class FamilyTreeSolution {
     }
     const file = fs.readFileSync(path, 'utf-8');
     const commands = file.split('\n');
-    const outputs = Solution.solve(commands);
+    const solution = new Solution();
+    const outputs = solution.solve(commands);
     outputs.forEach((output: string) => {
       console.log(output);
     });

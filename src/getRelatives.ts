@@ -1,20 +1,5 @@
 import { Person, GENDER } from "./Person";
 
-export enum RELATIONS {
-  PATERNAL_UNCLE = 'Paternal-Uncle',
-  MATERNAL_UNCLE = 'Maternal-Uncle',
-  PATERNAL_AUNT = 'Paternal-Aunt',
-  MATERNAL_AUNT = 'Maternal-Aunt',
-  SISTER_IN_LAW = 'Sister-In-Law',
-  BROTHER_IN_LAW = 'Brother-In-Law',
-  SON = 'Son',
-  DAUGHTER = 'Daughter',
-  SIBLINGS = 'Siblings'
-}
-
-interface IRelativesGetter {
-  [relation: string]: (person: Person) => Person[]
-}
 
 export class GetRelatives {
 
@@ -98,41 +83,4 @@ export class GetRelatives {
 
 }
 
-const relativesGetter: IRelativesGetter = {
-  [RELATIONS.PATERNAL_UNCLE]: (person: Person) => {
-    return GetRelatives.getFatherSiblings(person, GENDER.MALE);
-  },
-  [RELATIONS.PATERNAL_AUNT]: (person: Person) => {
-    return GetRelatives.getFatherSiblings(person, GENDER.FEMALE);
-  },
-  [RELATIONS.MATERNAL_AUNT]: (person: Person) => {
-    return GetRelatives.getMotherSiblings(person, GENDER.FEMALE);
-  },
-  [RELATIONS.MATERNAL_UNCLE]: (person: Person) => {
-    return GetRelatives.getMotherSiblings(person, GENDER.MALE);
-  },
-  [RELATIONS.SISTER_IN_LAW]: (person: Person) => {
-    return GetRelatives.getInLaws(person, GENDER.FEMALE, GENDER.MALE);
-  },
-  [RELATIONS.BROTHER_IN_LAW]: (person: Person) => {
-    return GetRelatives.getInLaws(person, GENDER.MALE, GENDER.FEMALE);
-  },
-  [RELATIONS.SON]: (person: Person) => {
-    return GetRelatives.getChildren(person, GENDER.MALE);
-  },
-  [RELATIONS.DAUGHTER]: (person: Person) => {
-    return GetRelatives.getChildren(person, GENDER.FEMALE);
-  },
-  [RELATIONS.SIBLINGS]: (person: Person) => {
-    return GetRelatives.getSiblings(person);
-  }
-}
 
-
-export const getRelatives = (person: Person, relation: string): Person[] => {
-  if (!relativesGetter[relation]) {
-    throw new Error('UNSUPPORTED_RELATION')
-  }
-  return relativesGetter[relation](person);
-
-}

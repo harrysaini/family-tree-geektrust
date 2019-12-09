@@ -1,7 +1,7 @@
 import { setUpFamilyTree } from "./TreeSetup";
-import { Family } from "./Person";
-import { getRelatives } from "./getRelatives";
 import { getNames } from "./utils";
+import { Family } from "./Family";
+import { RELATIONS } from "./Person";
 
 export enum COMMAND {
   ADD_CHILD = 'ADD_CHILD',
@@ -14,7 +14,7 @@ class Solution {
    * Execute array of commands
    * @param commands
    */
-  static solve(commands: string[]) {
+  solve(commands: string[]) {
     const family: Family = setUpFamilyTree();
     const outputs = commands.map((command) => {
       return this.executeCommand(command, family);
@@ -27,7 +27,7 @@ class Solution {
    * @param command
    * @param family
    */
-  static executeCommand(command: string, family: Family): string{
+  executeCommand(command: string, family: Family): string{
     try {
       const args = command.split(' ');
       if(args[0] === COMMAND.ADD_CHILD) {
@@ -47,7 +47,7 @@ class Solution {
    * @param args
    * @param family
    */
-  static executeAddChildCommand(args: string[], family: Family) {
+  executeAddChildCommand(args: string[], family: Family) {
     const motherName = args[1];
     const childName = args[2];
     const gender = args[3];
@@ -67,7 +67,7 @@ class Solution {
    * @param args
    * @param family
    */
-  static executeGetRelationCommand(args: string[], family: Family) {
+  executeGetRelationCommand(args: string[], family: Family) {
     const name = args[1];
     const relation = args[2];
 
@@ -77,7 +77,7 @@ class Solution {
 
     const person = family.getPerson(name);
 
-    const relatives = getRelatives(person, relation);
+    const relatives = person.getRelatives(relation as RELATIONS);
 
     if(relatives.length === 0) {
       return 'NONE';

@@ -1,15 +1,17 @@
 import Solution, { COMMAND } from '../src/Solution';
-import { Family, GENDER } from '../src/Person';
+import {GENDER, RELATIONS } from '../src/Person';
 import { setUpFamilyTree } from '../src/TreeSetup';
-import { RELATIONS } from '../src/getRelatives';
 import { expect } from 'chai';
 import { getNames } from './testUtils';
+import { Family } from '../src/Family';
 
 describe('Solution.ts Tests', () => {
   let family: Family;
+  let solution:  Solution;
 
   before(() => {
     family = setUpFamilyTree();
+    solution = new Solution();
   })
 
   describe('executeGetRelationCommand function tests', () => {
@@ -31,7 +33,7 @@ describe('Solution.ts Tests', () => {
 
     testCases.forEach((testCase, index) => {
       it(`gives correct result for args ${testCase.args} for case ${index}`, () => {
-        const relatives = Solution.executeGetRelationCommand(testCase.args, family);
+        const relatives = solution.executeGetRelationCommand(testCase.args, family);
         expect(relatives).to.be.eql(testCase.result);
       });
     });
@@ -56,7 +58,7 @@ describe('Solution.ts Tests', () => {
       it(`throws error ${testCase.message} for args ${testCase.args}`, () => {
         let errorThrown: boolean = false;
         try {
-          Solution.executeGetRelationCommand(testCase.args, family);
+          solution.executeGetRelationCommand(testCase.args, family);
         } catch (e) {
           errorThrown = true;
           expect(e).to.be.an.instanceOf(Error);
@@ -83,7 +85,7 @@ describe('Solution.ts Tests', () => {
 
     testCases.forEach((testCase, index) => {
       it(`gives adds child for args ${testCase.args} for case ${index}`, () => {
-        const res = Solution.executeAddChildCommand(testCase.args, family);
+        const res = solution.executeAddChildCommand(testCase.args, family);
         expect(res).to.be.equal('CHILD_ADDITION_SUCCEEDED');
         const mother = family.getPerson(testCase.args[1]);
         expect(mother.relations.children).not.undefined;
@@ -118,7 +120,7 @@ describe('Solution.ts Tests', () => {
       it(`throws error ${testCase.message} for args ${testCase.args}`, () => {
         let errorThrown: boolean = false;
         try {
-          Solution.executeAddChildCommand(testCase.args, family);
+          solution.executeAddChildCommand(testCase.args, family);
         } catch (e) {
           errorThrown = true;
           expect(e).to.be.an.instanceOf(Error);
@@ -175,7 +177,7 @@ describe('Solution.ts Tests', () => {
 
     testCases.forEach((testCase, index) => {
       it(`gives correct result for command ${testCase.args.join(' ')} for case ${index}`, () => {
-        const result = Solution.executeCommand(testCase.args.join(' '), family);
+        const result = solution.executeCommand(testCase.args.join(' '), family);
         expect(result).to.be.eql(testCase.result);
       });
     })
@@ -211,7 +213,7 @@ describe('Solution.ts Tests', () => {
 
 
     it(`gives correct result for commands`, () => {
-      const result = Solution.solve(cmds);
+      const result = solution.solve(cmds);
       expect(result).to.be.eql(results);
     });
 

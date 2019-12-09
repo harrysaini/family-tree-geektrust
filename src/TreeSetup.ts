@@ -1,4 +1,5 @@
-import { Family, GENDER } from './Person';
+import { GENDER } from './Person';
+import { Family } from './Family';
 
 export const setUpFamilyTree = () => {
   const family = new Family();
